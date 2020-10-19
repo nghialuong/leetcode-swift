@@ -19,27 +19,32 @@
               Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
  */
 
+/*
+ - Time Complexcity: O(n)
+ - Space Complexcity: O(m) - m is number of dict stores
+ */
+
 import Foundation
 
 func lengthOfLongestSubstring(_ s: String) -> Int {
     guard s.count > 0 else {
         return 0
     }
+    
     var dict = [Character: Int]()
     let chars = Array(s)
     var maxVal = 0
-    var tempIndex = 0
+    var startIdx = 0
     
     for i in 0..<chars.count {
         if let value = dict[chars[i]] {
-            tempIndex = max(tempIndex, value + 1)
+            startIdx = max(startIdx, value + 1)
         }
         dict[chars[i]] = i
-        maxVal = max(maxVal, i + 1 - tempIndex)
+        maxVal = max(maxVal, i + 1 - startIdx)
     }
     
     return maxVal
-    
 }
 
 print(lengthOfLongestSubstring("pwwkew")) // "dvdf"
