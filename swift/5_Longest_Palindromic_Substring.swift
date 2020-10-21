@@ -12,7 +12,11 @@ Input: "cbbd"
 Output: "bb"
 */
 
-/* // Around center 0(n^2)
+/*
+ Solution: Around center
+ - Time Complexity: O(n^2)
+ - Space Complexity: O(1)
+ */
 
  func longestPalindrome(_ s: String) -> String {
      let chars = Array(s)
@@ -64,10 +68,11 @@ Output: "bb"
 
  print(longestPalindrome("ac"))
 
-
-*/
-
-// Using DP
+/*
+ Solution: DP - Forward
+ - Time Complexity: O(n^2)
+ - Space Complexity: O(n^2) - making dp[n][n]
+ */
 
 func longestPalindrome(_ s: String) -> String {
     let chars = Array(s)
@@ -124,3 +129,43 @@ func substring(s: String, from: Int, to: Int) -> String {
 }
 
 print(longestPalindrome(""))
+
+/*
+ Solution: DP - Backward
+ - Time Complexity: O(n^2)
+ - Space Complexity: O(n^2) - making dp[n][n]
+ */
+
+func longestPalindrome(_ s: String) -> String {
+    
+    let n = s.count
+    let chars = Array(s)
+    var ans = ""
+    
+    var dp = Array(repeating: Array(repeating: false, count: n), count: n)
+    
+    for i in (0..<n).reversed() {
+        for j in i..<n {
+            dp[i][j] = chars[i] == chars[j] && (j - i < 3 || dp[i][j])
+            
+            if dp[i][j] && j - i + 1 > ans.count {
+                ans = s.substring(startIndex: i, endIndex: j + 1)
+            }
+        }
+    }
+    
+    return ans
+}
+
+extension String {
+    func substring(startIndex: Int, endIndex: Int) -> String {
+        let start = self.index(self.startIndex, offsetBy: startIndex)
+        let end = self.index(self.startIndex, offsetBy: endIndex)
+        let subString = self[start..<end]
+        return String(subString)
+    }
+}
+
+print(longestPalindrome(""))
+
+
