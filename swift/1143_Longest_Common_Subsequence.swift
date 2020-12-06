@@ -33,6 +33,12 @@
  The input strings consist of lowercase English characters only.
  */
 
+ /*
+ Solution: DP
+ - Time complexcity: O(m*n)
+ - Space complexcity: O(m*n) - make a 2D array to store dp
+ */
+
 
 func longestCommonSubsequence(_ text1: String, _ text2: String) -> Int {
 
