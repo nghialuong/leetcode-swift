@@ -27,6 +27,12 @@ public class TreeNode {
     }
 }
 
+/*
+ Solution: Recursion
+ Time: O(n) - hit every node
+ Space: O(log(n)) - in average case, when the tree is perfect balance
+ */
+
 func maxDepth(_ root: TreeNode?) -> Int {
     if root == nil {
         return 0
@@ -35,6 +41,47 @@ func maxDepth(_ root: TreeNode?) -> Int {
     let leftDepth = maxDepth(root?.left)
     let rightDepth = maxDepth(root?.right)
     return max(leftDepth, rightDepth) + 1
+}
+
+/* ====================== */
+
+
+/*
+ Solution: DFS interative
+ Time: O(n) - hit every node
+ Space: O(log(n)) - in average case, when the tree is perfect balance
+ */
+
+func maxDepth(_ root: TreeNode?) -> Int {
+    
+    guard var rootNode = root else {
+        return 0
+    }
+    
+    var stack = [TreeNode]()
+    var depths = [Int]()
+    depths.append(1)
+    
+    var depth = 0
+    var current_depth = 0
+    stack.append(rootNode)
+    
+    while !stack.isEmpty {
+        rootNode = stack.popLast()!
+        current_depth = depths.popLast()!
+        depth = max(depth, current_depth)
+        
+        if let leftNode = rootNode.left {
+            stack.append(leftNode)
+            depths.append(current_depth + 1)
+        }
+        if let rightNode = rootNode.right {
+            stack.append(rightNode)
+            depths.append(current_depth + 1)
+        }
+    }
+    
+    return depth
 }
 
 
