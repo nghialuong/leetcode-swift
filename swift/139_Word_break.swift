@@ -21,6 +21,11 @@
  Input: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
  Output: false
  */
+
+/*
+ Solution: DP
+ Time: O(n^3)
+ */
  
  func wordBreak(_ s: String, _ words: [String]) -> Bool {
     var dp = Array(repeating: false, count: s.count+1)
@@ -59,3 +64,43 @@
 
  
  print(wordBreak("a", ["a"]))
+
+
+/*
+Solution: Bruce Force
+Time: O(2^n)
+ 
+*/
+
+func wordBreak(_ s: String, _ wordDict: [String]) -> Bool {
+    return backtrack(s, dict: Set(wordDict), startIdx: 0)
+}
+
+func backtrack(_ s: String, dict: Set<String>, startIdx: Int) -> Bool {
+    if startIdx == s.count {
+        return true
+    }
+    
+    for endIdx in startIdx + 1 ... s.count {
+        let str = s.substring(startIndex: startIdx, endIndex: endIdx)
+        if dict.contains(str) {
+            if backtrack(s, dict: dict, startIdx: endIdx) {
+                return true
+            }
+        }
+    }
+    
+    return false
+}
+
+extension String {
+    func substring(startIndex: Int, endIndex: Int) -> String {
+        let start = self.index(self.startIndex, offsetBy: startIndex)
+        let end = self.index(self.startIndex, offsetBy: endIndex)
+        let subString = self[start..<end]
+        return String(subString)
+    }
+}
+
+let dict = ["leet", "code"]
+print(wordBreak("leetcodea", dict))
