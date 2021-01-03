@@ -21,6 +21,11 @@
  Output: 3
  */
 
+/*
+ Time: O(MxN); number of rows and number of columns
+ Space: worst case O(MxN)
+ */
+
 import Foundation
 
 func numIslands(_ grid: [[Character]]) -> Int {
